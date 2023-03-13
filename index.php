@@ -80,16 +80,12 @@ $tasks = [
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <li class="main-navigation__list-item">
-                            <?php
-                            $index = 0;
-                            $num = count($categories);
-                            while ($index < $num): ?>
-                                <a class="main-navigation__list-item-link" href="#"><?=$categories[$index];?></a>
-                                <?php $index++; ?>
-                            <?php endwhile; ?>
-                            <span class="main-navigation__list-item-count">0</span>
-                        </li>
+                        <?php foreach ($categories as $category): ?>
+                            <li class="main-navigation__list-item">
+                                <a class="main-navigation__list-item-link" href="#"><?=$category;?></a>
+                                <span class="main-navigation__list-item-count">0</span>
+                            </li>
+                        <?php endforeach; ?>
                     </ul>
                 </nav>
 
@@ -115,39 +111,28 @@ $tasks = [
                     </nav>
 
                     <label class="checkbox">
-                        <input class="checkbox__input visually-hidden show_completed" type="checkbox"<?php if ($show_complete_tasks == 1) echo ' checked' ?>>
+                        <input class="checkbox__input visually-hidden show_completed" type="checkbox"<?php if ($show_complete_tasks === 1):?> checked<?php endif; ?>>
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
                 <table class="tasks">
-                    <tr class="tasks__item task">
+                    <?php foreach ($tasks as $task): ?>
+                        <?php if ($show_complete_tasks === 0 && $task['completed'] === true): ?> <?continue;?><?php endif ?>
+                    <tr class="tasks__item task<?php if ($task['completed'] === true): ?> <?=' task--completed';?><?php endif ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1">
-                                <span class="checkbox__text">Сделать главную страницу Дела в порядке</span>
+                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"<?php if ($task['completed'] === true):?> checked<?php endif; ?>>
+                                <span class="checkbox__text"><?=$task['task'];?></span>
                             </label>
                         </td>
 
-                        <td class="task__file">
+                        <!--<td class="task__file">
                             <a class="download-link" href="#">Home.psd</a>
-                        </td>
+                        </td>--> <!-- Я понятия не имею зачем тут этот <td> -->
 
-                        <td class="task__date"></td>
+                        <td class="task__date"><?=$task['date'];?></td>
                     </tr>
-                    <?php if ($show_complete_tasks == 1) : ?>
-                    <tr class="tasks__item task task--completed">
-                        <td class="task__select">
-                            <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden" type="checkbox" checked>
-                                <span class="checkbox__text">Записаться на интенсив "Базовый PHP"</span>
-                            </label>
-                        </td>
-                        <td class="task__date">10.10.2019</td>
-
-                         <td class="task__controls">
-                        </td>
-                    <?php endif ; ?>    
-                    </tr>
+                    <?php endforeach; ?>
                 </table>
             </main>
         </div>
