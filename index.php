@@ -5,25 +5,25 @@ $categories = ['Входящие','Учеба','Работа','Домашние 
 $tasks = [
     [
         'task' => 'Собеседование в IT компании',
-        'date' => '01.12.2019',
+        'date' => '17.03.2023',
         'category' => 'Работа',
         'completed' => false
     ],
     [
         'task' => 'Выполнить тестовое задание',
-        'date' => '25.12.2019',
+        'date' => '25.03.2023',
         'category' => 'Работа',
         'completed' => false
     ],
     [
         'task' => 'Сделать задание первого раздела',
-        'date' => '21.12.2019',
+        'date' => '13.03.2023',
         'category' => 'Учеба',
         'completed' => true
     ],
     [
         'task' => 'Встреча с другом',
-        'date' => '22.12.2019',
+        'date' => '22.12.2023',
         'category' => 'Входящие',
         'completed' => false    
     ],
@@ -61,5 +61,5 @@ $layout = include_template('layout.php', [
     'title' => 'Дела в порядке',
     'username' => 'Константин'
 ]);
-htmlspecialchars(print($layout));
+print($layout);
 ?>

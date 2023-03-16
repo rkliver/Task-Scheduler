@@ -40,9 +40,12 @@
                     </label>
                 </div>
                 <table class="tasks">
-                    <?php foreach ($tasks as $task): ?>
+                    <?php foreach ($tasks as $task): 
+                        $time_to_task = strtotime($task['date']) -  time();
+                        $hours_left = floor($time_to_task / 3600);
+                        ?>
                         <?php if ($show_complete_tasks === 0 && $task['completed'] === true): ?> <?continue;?><?php endif ?>
-                    <tr class="tasks__item task<?php if ($task['completed'] === true): ?> <?=' task--completed';?><?php endif ?>">
+                    <tr class="tasks__item task<?php if ($task['completed'] === true): ?> <?=' task--completed';?><?php endif ?><?php if ($hours_left >= 0 && $hours_left <= 24): ?> <?=' task--important';?><?php endif ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"<?php if ($task['completed'] === true):?> checked<?php endif; ?>>
