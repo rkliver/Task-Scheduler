@@ -1,65 +1,62 @@
 <?php
 require_once ('helpers.php');
+require_once ('init.php');
+
+$user = 'Keks';
 $show_complete_tasks = rand(0, 1);
-$categories = ['Входящие','Учеба','Работа','Домашние дела','Авто'];
-$tasks = [
-    [
-        'task' => 'Собеседование в IT компании',
-        'date' => '01.12.2023',
-        'category' => 'Работа',
-        'completed' => false
-    ],
-    [
-        'task' => 'Выполнить тестовое задание',
-        'date' => '01.11.2023',
-        'category' => 'Работа',
-        'completed' => false
-    ],
-    [
-        'task' => 'Сделать задание первого раздела',
-        'date' => '13.03.2023',
-        'category' => 'Учеба',
-        'completed' => true
-    ],
-    [
-        'task' => 'Встреча с другом',
-        'date' => '22.12.2023',
-        'category' => 'Входящие',
-        'completed' => false    
-    ],
-    [
-        'task' => 'Купить корм для кота',
-        'date' => null,
-        'category' => 'Домашние дела',
-        'completed' => false    
-    ],
-    [
-        'task' => 'Заказать пиццу',
-        'date' => null,
-        'category' => 'Домашние дела',
-        'completed' => false      
-    ]
-];
-function task_counter(array $tasks, string $project): int{
+$tasks = [];
+
+if (!$con) {
+    $error = mysqli_connect_error();
+    $page_content = include_template('error.php', ['error' => $error]);
+} else {
+    $sql = "SELECT * FROM projects JOIN users ON user_id = users.id WHERE login = '$user'";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($con);
+        $page_content = include_template('error.php', ['error' => $error]);
+    }
+}
+if (!$con){
+    $error = mysqli_connect_error();
+    $page_content = include_template('error.php', ['error' => $error]);
+} else {
+    $sql = "SELECT * FROM tasks JOIN users ON user_id = users.id WHERE login = '$user'";
+    $result = mysqli_query($con, $sql);
+    if ($result) {
+        $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        $error = mysqli_error($con);
+        $page_content = include_template('error.php', ['error' => $error]);
+    }
+}
+
+function task_counter(array $tasks, $project): int{
     $count = 0;
     foreach($tasks as $task) 
     {
-        if ($project === $task['category']) 
+        if ($project == $task['project_id']) 
         {
             $count ++;
         };
     };
     return $count;
-};
+}
+
 $page_content = include_template('main.php', [
     'categories' => $categories,
     'tasks' => $tasks,
     'show_complete_tasks' => $show_complete_tasks
 ]);
+
 $layout = include_template('layout.php', [
     'page_content' => $page_content,
     'title' => 'Дела в порядке',
-    'username' => 'Константин'
+    'user' => $user
 ]);
+
 print($layout);
+
 ?>

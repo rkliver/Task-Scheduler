@@ -6,8 +6,8 @@
                     <ul class="main-navigation__list">
                         <?php foreach ($categories as $category): ?>
                             <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#"><?=$category;?></a>
-                                <span class="main-navigation__list-item-count"><?=task_counter($tasks, $category)?></span>
+                                <a class="main-navigation__list-item-link" href="#"><?=$category['title'];?></a>
+                                <span class="main-navigation__list-item-count"><?=task_counter($tasks, $category['id']);?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -44,12 +44,12 @@
                         $time_to_task = strtotime($task['date']) -  time();
                         $hours_left = floor($time_to_task / 3600);
                         ?>
-                        <?php if ($show_complete_tasks === 0 && $task['completed'] === true): ?> <?continue;?><?php endif ?>
-                    <tr class="tasks__item task<?php if ($task['completed'] === true): ?> <?=' task--completed';?><?php endif ?><?php if ($hours_left >= 0 && $hours_left <= 24): ?> <?=' task--important';?><?php endif ?>">
+                        <?php if ($show_complete_tasks === 0 && $task['status'] == true): ?> <?continue;?><?php endif ?>
+                    <tr class="tasks__item task<?php if ($task['status'] == true): ?> <?=' task--completed';?><?php endif ?><?php if ($hours_left >= 0 && $hours_left <= 24): ?> <?=' task--important';?><?php endif ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"<?php if ($task['completed'] === true):?> checked<?php endif; ?>>
-                                <span class="checkbox__text"><?=$task['task'];?></span>
+                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"<?php if ($task['status'] == true):?> checked<?php endif; ?>>
+                                <span class="checkbox__text"><?=$task['title'];?></span>
                             </label>
                         </td>
 
