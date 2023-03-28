@@ -11,6 +11,7 @@ INSERT INTO projects (title, user_id) VALUES ('Учеба', 1);
 INSERT INTO projects (title, user_id) VALUES ('Работа', 1);
 INSERT INTO projects (title, user_id) VALUES ('Домашние дела', 2);
 INSERT INTO projects (title, user_id) VALUES ('Авто', 2);
+INSERT INTO projects (title, user_id) VALUES ('Стройка', 2);
 /*
   Создаём задачи, связанные с проектами и пользователями.
 */
@@ -20,8 +21,10 @@ INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Выпол
 INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Сделать задание первого раздела', 1, '2023-03-13', 1, 2);
 INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Встреча с другом', 0, '2023-12-22', 1, 1);
 INSERT INTO tasks (title, status, user_id, project_id) VALUES ('Купить корм для кота', 0, 2, 4);
-INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Помыть окна', 0, '2023-03-29', 1, 4);
+INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Обновить ПО', 0, '2023-03-29', 1, 2);
 INSERT INTO tasks (title, status, user_id, project_id) VALUES ('Заказать пиццу', 0, 2, 4);
+INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Поставить летнюю резину на авто', 0, '2023-04-10', 2, 5);
+INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Обсудить с заказчиком правки', 0, '2023-03-29', 2, 6);
 /*Получаем список из всех проектов для одного пользователя*/
 SELECT projects.title FROM projects JOIN users ON user_id = users.id WHERE login = 'Keks';
 /*Получаем список из всех задач для одного проекта*/

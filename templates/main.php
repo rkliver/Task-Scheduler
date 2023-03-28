@@ -4,10 +4,10 @@
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php foreach ($categories as $category): ?>
+                        <?php foreach ($projects as $project): ?>
                             <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#"><?= $category['title']?></a>
-                                <span class="main-navigation__list-item-count"><?= task_counter($tasks, $category['id'])?></span>
+                                <a class="main-navigation__list-item-link" href="#"><?= $project['title']?></a>
+                                <span class="main-navigation__list-item-count"><?= task_counter($tasks, $project['id'])?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -53,11 +53,11 @@
                             </label>
                         </td>
 
-                        <!--<td class="task__file">
-                            <a class="download-link" href="#">Home.psd</a>
-                        </td>--> <!-- Я понятия не имею зачем тут этот <td> -->
+                        <td class="task__file">
+                            <a class="download-link<?php if($task['file_path'] === NULL):?><?=' hidden'?><?php endif?>" href="<?=$task['file_path'];?>">Home.psd</a>
+                        </td>
 
-                        <td class="task__date"><?=$task['date'];?></td>
+                        <td class="task__date"><?=date('d.m.Y',strtotime($task['date']));?></td>
                     </tr>
                     <?php endforeach; ?>
                 </table>
