@@ -15,10 +15,12 @@ INSERT INTO projects (title, user_id) VALUES ('Авто', 2);
   Создаём задачи, связанные с проектами и пользователями.
 */
 INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Собеседование в IT компании', 0, '2023-12-01', 1, 3);
+INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Составить резюме', 0, '2023-12-01', 1, 3);
 INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Выполнить тестовое задание', 0, '2023-11-01', 1, 3);
 INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Сделать задание первого раздела', 1, '2023-03-13', 1, 2);
 INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Встреча с другом', 0, '2023-12-22', 1, 1);
 INSERT INTO tasks (title, status, user_id, project_id) VALUES ('Купить корм для кота', 0, 2, 4);
+INSERT INTO tasks (title, status, date, user_id, project_id) VALUES ('Помыть окна', 0, '2023-03-29', 1, 4);
 INSERT INTO tasks (title, status, user_id, project_id) VALUES ('Заказать пиццу', 0, 2, 4);
 /*Получаем список из всех проектов для одного пользователя*/
 SELECT projects.title FROM projects JOIN users ON user_id = users.id WHERE login = 'Keks';

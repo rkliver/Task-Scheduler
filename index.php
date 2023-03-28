@@ -4,13 +4,12 @@ require_once ('init.php');
 
 $user = 'Keks';
 $show_complete_tasks = rand(0, 1);
-$tasks = [];
 
 if (!$con) {
     $error = mysqli_connect_error();
     $page_content = include_template('error.php', ['error' => $error]);
 } else {
-    $sql = "SELECT * FROM projects JOIN users ON user_id = users.id WHERE login = '$user'";
+    $sql = "SELECT projects.id, title FROM projects JOIN users ON user_id = users.id WHERE login = '$user'";
     $result = mysqli_query($con, $sql);
     if ($result) {
         $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -33,15 +32,13 @@ if (!$con){
     }
 }
 
-function task_counter(array $tasks, $project): int{
+function task_counter($tasks, $task_project): int{
     $count = 0;
-    foreach($tasks as $task) 
-    {
-        if ($project == $task['project_id']) 
-        {
+    foreach($tasks as $task){
+        if ($task['project_id'] == $task_project){
             $count ++;
-        };
-    };
+        }
+    }
     return $count;
 }
 
