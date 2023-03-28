@@ -9,7 +9,10 @@ if (!$con) {
     $error = mysqli_connect_error();
     $page_content = include_template('error.php', ['error' => $error]);
 } else {
-    $sql = "SELECT projects.id, title FROM projects JOIN users ON user_id = users.id WHERE login = '$user'";
+    $sql = "SELECT p.id, title 
+            FROM projects p 
+            JOIN users u ON user_id = u.id 
+            WHERE login = '$user'";
     $result = mysqli_query($con, $sql);
     if ($result) {
         $projects = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -23,7 +26,10 @@ if (!$con){
     $error = mysqli_connect_error();
     $page_content = include_template('error.php', ['error' => $error]);
 } else {
-    $sql = "SELECT * FROM tasks JOIN users ON user_id = users.id WHERE login = '$user'";
+    $sql = "SELECT t.title AS task_name, p.title AS project_name , status, date, file_path, t.user_id, project_id FROM tasks t 
+            JOIN users u ON t.user_id = u.id 
+            JOIN projects p ON t.project_id = p.id
+            WHERE u.login = '$user'";
     $result = mysqli_query($con, $sql);
     if ($result) {
         $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
@@ -36,7 +42,7 @@ if (!$con){
 function task_counter($tasks, $task_project): int{
     $count = 0;
     foreach($tasks as $task){
-        if ($task['project_id'] == $task_project){
+        if ($task['project_name'] == $task_project){
             $count ++;
         }
     }

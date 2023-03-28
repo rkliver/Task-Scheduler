@@ -7,7 +7,7 @@
                         <?php foreach ($projects as $project): ?>
                             <li class="main-navigation__list-item">
                                 <a class="main-navigation__list-item-link" href="#"><?= $project['title']?></a>
-                                <span class="main-navigation__list-item-count"><?= task_counter($tasks, $project['id'])?></span>
+                                <span class="main-navigation__list-item-count"><?= task_counter($tasks, $project['title'])?></span>
                             </li>
                         <?php endforeach; ?>
                     </ul>
@@ -49,7 +49,7 @@
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
                                 <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"<?php if ($task['status'] == true):?> checked<?php endif; ?>>
-                                <span class="checkbox__text"><?=$task['title'];?></span>
+                                <span class="checkbox__text"><?=$task['task_name'];?></span>
                             </label>
                         </td>
 
