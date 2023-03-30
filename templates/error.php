@@ -1,9 +1,9 @@
-<main class="content">
-    <div class="content__main-col">
-        <header class="content__header">
-            <h2 class="content__header-text">Ошибка</h2>
+<main class="content__main">
+    <div>
+        <header class="content__main-heading">
+            <h2 class="content__main-heading">Ошибка</h2>
         </header>
-        <article class="gif-list">
+        <article>
             <p class="error"><?= $error; ?></p>
         </article>
     </div>
