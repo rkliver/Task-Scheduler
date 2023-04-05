@@ -51,6 +51,12 @@ if (isset($_GET['project_id'])) {
         }
     }
   }
+
+  if (count($tasks) == 0) {
+    $error = 'Ошибка "404".Не найдено ни одной задачи для данного проекта!';
+    $page_content = include_template('error.php', ['error' => $error]);
+  }
+
 /* Передаем данные в шаблон главной страницы: */
 if (!isset($page_content)){
     $page_content = include_template('main.php', [

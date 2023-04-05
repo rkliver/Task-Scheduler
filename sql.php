@@ -3,7 +3,7 @@
 $user = 'Keks';
 $project_id = filter_input(INPUT_GET, 'project_id', FILTER_SANITIZE_NUMBER_INT);
 
-$projects_for_user = "SELECT p.id, title 
+$projects_for_user = "SELECT p.id, title, p.user_id, u.id as project_user
 FROM projects p 
 JOIN users u ON user_id = u.id 
 WHERE login = '$user'
