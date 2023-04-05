@@ -5,8 +5,8 @@
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
                         <?php foreach ($projects as $project): ?>
-                            <li class="main-navigation__list-item">
-                                <a class="main-navigation__list-item-link" href="#"><?= $project['title']?></a>
+                            <li class="main-navigation__list-item<?php if (isset($_GET['project_id']) && $_GET['project_id'] === $project['id']) echo('--active')?>">
+                                <a class="main-navigation__list-item-link" href="http://task-scheduler/?project_id=<?=$project['id']?>"><?= $project['title']?></a>
                                 <span class="main-navigation__list-item-count"><?= task_counter($tasks, $project['title'])?></span>
                             </li>
                         <?php endforeach; ?>
