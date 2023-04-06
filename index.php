@@ -77,7 +77,7 @@ if (isset($_GET['project_id'])) {
   }
 
   if (count($tasks) == 0) {
-    $error = 'Ошибка "404".Не найдено ни одной задачи для данного проекта!';
+    $error = 'Ошибка "404". Проект не найден!';
     $page_content = include_template('error.php', ['error' => $error]);
   }
 
