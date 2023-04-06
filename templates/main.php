@@ -35,7 +35,7 @@
                     </nav>
 
                     <label class="checkbox">
-                        <input class="checkbox__input visually-hidden show_completed" type="checkbox"<?php if ($show_complete_tasks === 1):?> checked<?php endif; ?>>
+                        <input class="checkbox__input visually-hidden show_completed" type="checkbox"<?php if ($show_complete_tasks == 1):?> checked<?php endif; ?>>
                         <span class="checkbox__text">Показывать выполненные</span>
                     </label>
                 </div>
@@ -44,7 +44,7 @@
                         $time_to_task = strtotime($task['date']) -  time();
                         $hours_left = floor($time_to_task / 3600);
                         ?>
-                        <?php if ($show_complete_tasks === 0 && $task['status'] == true): ?> <?continue;?><?php endif ?>
+                        <?php if ($show_complete_tasks == 0 && $task['status'] == true): ?> <?continue;?><?php endif ?>
                     <tr class="tasks__item task<?php if ($task['status'] == true): ?> <?=' task--completed';?><?php endif ?><?php if ($hours_left >= 0 && $hours_left <= 24): ?> <?=' task--important';?><?php endif ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
