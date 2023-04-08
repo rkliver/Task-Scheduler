@@ -49,7 +49,62 @@ if (!$con){
 }
 
 $page_content = include_template('form-task.php', ['projects' => $projects, 'tasks' => $tasks,]);
-/* Передаем данные в шаблон вёрстки сайта: */
+/*Получаем данные из формы добавления задачи*/
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+    $task_add['title'] = $_POST['name'];
+    $task_add['project_id'] = $_POST['project'];
+    $task_add['date'] = $_POST['date'];
+	$task_add['file_path'] = NULL;
+    /*Проверяем наличие прикрепленного файла*/
+    if (isset($_FILES['file']) && $_FILES['file']['size'] != 0) {
+        $file_name = $_FILES['file']['name'];
+	    $file_ext = pathinfo($file_name);
+	    $current_date =date("Y-m-d-G-i-s");
+	    $new_file_name = $current_date.'.'.$file_ext['extension'];
+	    $file_path = __DIR__ . '/uploads/';
+	    $task_add['file_path'] = '/uploads/' . $new_file_name;
+	    
+	    move_uploaded_file($_FILES['file']['tmp_name'], $file_path . $new_file_name);
+    }
+
+    $errors = [];
+    /*Валидируем название задачи*/
+    if ($task_add['title'] == '') {
+		$errors['title'] = 'Введите название';
+	} else if (iconv_strlen($task_add['title']) > 255) {
+		$errors['title'] = 'Длинна поля превышает максимально допустимую (255 символов)';
+	}
+    /*Валидируем проект, к которому относится  задача*/
+    $sql = "SELECT id FROM projects WHERE id = ".$task_add['project_id'];
+	$res = mysqli_query($con, $sql);
+	$pro_id = mysqli_fetch_assoc($res);
+	if ($pro_id == NULL) {
+		$errors['project_id'] = 'Укажите существующий проект';
+	}
+    /*Валидируем указанную пользователем дату выполнения задачи*/
+    if (!is_date_valid($task_add['date'])){
+        $errors['date'] = 'Введите дату в формате ГГГГ-ММ-ДД';
+    }
+    
+    $errors = array_filter($errors);
+
+    if (count($errors)) {
+		$page_content = include_template('form-task.php', ['errors' => $errors, 'projects' => $projects, 'tasks' => $tasks,]);
+	} else{
+    $sql = "INSERT INTO tasks (title, project_id, date, file_path, user_id) VALUES (?, ?, ?, ?, 1)";
+    
+    $stmt = db_get_prepare_stmt($con, $sql, $task_add);
+    $res = mysqli_stmt_execute($stmt);
+
+    if ($res) {
+        header("Location: index.php");
+    }else {
+        $page_content = include_template('error.php', ['error' => mysqli_error($con)]);
+    }
+  }
+}
+
 $layout = include_template('layout.php', [
     'page_content' => $page_content,
     'title' => 'Дела в порядке',
@@ -57,4 +112,5 @@ $layout = include_template('layout.php', [
 ]);
 
 print($layout);
+/* <?php print_r($_POST) ?> */
 ?>

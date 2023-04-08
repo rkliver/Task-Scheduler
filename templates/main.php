@@ -45,16 +45,16 @@
                         $hours_left = floor($time_to_task / 3600);
                         ?>
                         <?php if ($show_complete_tasks == 0 && $task['status'] == true): ?> <?continue;?><?php endif ?>
-                    <tr class="tasks__item task<?php if ($task['status'] == true): ?> <?=' task--completed';?><?php endif ?><?php if ($hours_left >= 0 && $hours_left <= 24): ?> <?=' task--important';?><?php endif ?>">
+                    <tr class="tasks__item task <?php if ($task['status'] == true): ?> <?=' task--completed';?><?php endif ?><?php if ($hours_left >=0 && $hours_left <= 24): ?> <?=' task--important';?><?php endif ?>">
                         <td class="task__select">
                             <label class="checkbox task__checkbox">
-                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="1"<?php if ($task['status'] == true):?> checked<?php endif; ?>>
+                                <input class="checkbox__input visually-hidden task__checkbox" type="checkbox" value="<?=($task['task_ident']);?>"<?php if ($task['status'] == true):?> checked<?php endif; ?>>
                                 <span class="checkbox__text"><?=$task['task_name'];?></span>
                             </label>
                         </td>
 
                         <td class="task__file">
-                            <a class="download-link<?php if($task['file_path'] === NULL):?><?=' hidden'?><?php endif?>" href="<?=$task['file_path'];?>">Home.psd</a>
+                            <a class="download-link<?php if($task['file_path'] === NULL):?><?=' hidden'?><?php endif?>" href="<?=$task['file_path'];?>"><?=$task['task_name'];?></a>
                         </td>
 
                         <td class="task__date"><?=date('d.m.Y',strtotime($task['date']));?></td>
