@@ -54,7 +54,7 @@
                         </td>
 
                         <td class="task__file">
-                            <a class="download-link<?php if($task['file_path'] === NULL):?><?=' hidden'?><?php endif?>" href="<?=$task['file_path'];?>"><?=$task['task_name'];?></a>
+                            <a class="download-link<?php if($task['file_path'] === NULL):?><?=' hidden'?><?php endif?>" href="<?=$task['file_path'];?>"><?=$task['file_path'];?></a>
                         </td>
 
                         <td class="task__date"><?=date('d.m.Y',strtotime($task['date']));?></td>

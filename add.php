@@ -52,9 +52,9 @@ $page_content = include_template('form-task.php', ['projects' => $projects, 'tas
 /*Получаем данные из формы добавления задачи*/
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    $task_add['title'] = $_POST['name'];
-    $task_add['project_id'] = $_POST['project'];
-    $task_add['date'] = $_POST['date'];
+    $task_add['title'] = htmlspecialchars($_POST['name']);
+    $task_add['project_id'] = filter_input(INPUT_POST, 'project', FILTER_SANITIZE_NUMBER_INT);
+    $task_add['date'] = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_NUMBER_INT);
 	$task_add['file_path'] = NULL;
     /*Проверяем наличие прикрепленного файла*/
     if (isset($_FILES['file']) && $_FILES['file']['size'] != 0) {
@@ -85,8 +85,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     /*Валидируем указанную пользователем дату выполнения задачи*/
     if (!is_date_valid($task_add['date'])){
         $errors['date'] = 'Введите дату в формате ГГГГ-ММ-ДД';
+    } else if ($task_add['date'] != '' and !define_correct_date($task_add['date'])) {
+		$errors['date'] = 'Дата должна быть больше или равна текущей';
     }
-    
     $errors = array_filter($errors);
 
     if (count($errors)) {

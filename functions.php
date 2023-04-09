@@ -10,27 +10,19 @@ function task_counter($tasks, $task_project): int{
     return $count;
 }
 
-function validate_project($id, $allowed_list) {
-    if (!in_array($id, $allowed_list)) {
-        return "Указан несуществующий проект";
-    }
-
-    return null;
-}
-
-function validate_length($value, $min, $max) {
-    if ($value) {
-        $len = strlen($value);
-        if ($len <= $min or $len > $max) {
-            return "Значение должно быть от $min до $max символов";
-        }
-    }
-
-    return null;
-}
-
 function getPostVal($name) {
     return filter_input(INPUT_POST, $name);
 }
 
+function define_correct_date ($date) {
+    $analyzed_date = strtotime($date);
+    $current_date = strtotime(date("Y-m-d"));
+    $flag = false;
+
+    if (0 <= $analyzed_date -  $current_date) {
+        $flag = true;
+    }
+
+    return $flag;
+};
 ?>
