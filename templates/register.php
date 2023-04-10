@@ -18,16 +18,16 @@
           <img src="../img/logo.png" width="153" height="42" alt="Логитип Дела в порядке">
         </a>
 
-        <div class="main-header__side">
+        <!--div class="main-header__side">
           <a class="main-header__side-item button button--transparent" href="form-authorization.html">Войти</a>
-        </div>
+        </div-->
       </header>
 
       <div class="content">
         <section class="content__side">
           <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
 
-          <a class="button button--transparent content__side-button" href="form-authorization.html">Войти</a>
+          <a class="button button--transparent content__side-button" href="auth.php">Войти</a>
         </section>
 
         <main class="content__main">

@@ -28,7 +28,7 @@
                       <div class="user-menu__data">
                           <p><?=$user?></p>
 
-                          <a href="#">Выйти</a>
+                          <a href="logout.php">Выйти</a>
                         </div>
                     </div>
                     <?php else:?>
@@ -52,7 +52,7 @@
 
         <div class="main-footer__social social">
             <span class="visually-hidden">Мы в соцсетях:</span>
-            <a class="social__link social__link--facebook" href="#">
+            <a class="social__link social__link--facebook" href="">
                 <span class="visually-hidden">Facebook</span>
                 <svg width="27" height="27" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg">
                     <circle stroke="#879296" fill="none" cx="13.5" cy="13.5" r="12.667"/>
@@ -61,7 +61,7 @@
                 </svg>
             </a><span class="visually-hidden">
         ,</span>
-            <a class="social__link social__link--twitter" href="#">
+            <a class="social__link social__link--twitter" href="">
                 <span class="visually-hidden">Twitter</span>
                 <svg width="27" height="27" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg">
                     <circle stroke="#879296" fill="none" cx="13.5" cy="13.5" r="12.687"/>
@@ -70,7 +70,7 @@
                 </svg>
             </a><span class="visually-hidden">
         ,</span>
-            <a class="social__link social__link--instagram" href="#">
+            <a class="social__link social__link--instagram" href="">
                 <span class="visually-hidden">Instagram</span>
                 <svg width="27" height="27" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg">
                     <circle stroke="#879296" fill="none" cx="13.5" cy="13.5" r="12.687"/>
@@ -79,7 +79,7 @@
                 </svg>
             </a>
             <span class="visually-hidden">,</span>
-            <a class="social__link social__link--vkontakte" href="#">
+            <a class="social__link social__link--vkontakte" href="">
                 <span class="visually-hidden">Вконтакте</span>
                 <svg width="27" height="27" viewBox="0 0 27 27" xmlns="http://www.w3.org/2000/svg">
                     <circle stroke="#879296" fill="none" cx="13.5" cy="13.5" r="12.666"/>

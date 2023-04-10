@@ -4,7 +4,10 @@ require_once ('init.php');
 require_once ('functions.php');
 
 /* текущий пользователь: */
-if (isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])) {
+    $layout = include_template('guest.php');
+} else {
+
     $user_id = $_SESSION['user_id'];
     $sql= "SELECT login FROM users WHERE id = ".'"'.$user_id.'"';
     $res = mysqli_query($con, $sql);
@@ -141,7 +144,8 @@ $layout = include_template('layout.php', [
     'title' => 'Дела в порядке',
     'user' => $user
 ]);
+}
 
 print($layout);
-}
+
 ?>

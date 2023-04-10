@@ -4,7 +4,15 @@ require_once ('helpers.php');
 require_once ('functions.php');
 
 /* текущий пользователь: */
-$user = 'Keks';
+if (!isset($_SESSION['user_id'])){
+    $layout = include_template('guest.php');
+} else {
+    $user_id = $_SESSION['user_id'];
+    $sql= "SELECT login FROM users WHERE id = ".'"'.$user_id.'"';
+    $res = mysqli_query($con, $sql);
+    $user_log = mysqli_fetch_assoc($res);
+    $user_name = $user_log['login'];
+    $user = $user_name;
 
 /* получаем список проектов для текущего пользователя: */
 $projects_for_user = "SELECT p.id, title, p.user_id, u.id as project_user
@@ -56,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $task_add['project_id'] = filter_input(INPUT_POST, 'project', FILTER_SANITIZE_NUMBER_INT);
     $task_add['date'] = filter_input(INPUT_POST, 'date', FILTER_SANITIZE_NUMBER_INT);
 	$task_add['file_path'] = NULL;
+    $task_add['user_id'] = $_SESSION['user_id'];
     /*Проверяем наличие прикрепленного файла*/
     if (isset($_FILES['file']) && $_FILES['file']['size'] != 0) {
         $file_name = $_FILES['file']['name'];
@@ -93,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errors)) {
 		$page_content = include_template('form-task.php', ['errors' => $errors, 'projects' => $projects, 'tasks' => $tasks,]);
 	} else{
-    $sql = "INSERT INTO tasks (title, project_id, date, file_path, user_id) VALUES (?, ?, ?, ?, 1)";
+    $sql = "INSERT INTO tasks (title, project_id, date, file_path, user_id) VALUES (?, ?, ?, ?, ?)";
     
     $stmt = db_get_prepare_stmt($con, $sql, $task_add);
     $res = mysqli_stmt_execute($stmt);
@@ -111,7 +120,6 @@ $layout = include_template('layout.php', [
     'title' => 'Дела в порядке',
     'user' => $user
 ]);
-
+}
 print($layout);
-/* <?php print_r($_POST) ?> */
 ?>
