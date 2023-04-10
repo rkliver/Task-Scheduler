@@ -9,8 +9,8 @@ $layout = include_template('register.php', ['title' => 'Регистрация']
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $new_user['login'] = htmlspecialchars($_POST['name']);
-    $password = $_POST['password'];
     $new_user['email'] = $_POST['email'];
+    $password = $_POST['password'];
 
     $errors =[];
 
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (count($errors)) {
         $layout = include_template('register.php', ['errors' => $errors, 'title' => 'Регистрация']);
     }else{
-        $sql = "INSERT INTO users (login, password, email, registration_date) VALUES (?, ?, ?, NOW())";
+        $sql = "INSERT INTO users (login, email, password, registration_date) VALUES (?, ?, ?, NOW())";
     
         $stmt = db_get_prepare_stmt($con, $sql, $new_user);
         $res = mysqli_stmt_execute($stmt);

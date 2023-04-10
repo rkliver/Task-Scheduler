@@ -8,27 +8,32 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/flatpickr.min.css">
 </head>
-
-<body>
+<?php $classname = isset($_SESSION['user_id']) ? "" : "body-background"; ?>
+<body class=<?= $classname ?>>
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container container--with-sidebar">
+<?php $classname = isset($_SESSION['user_id']) ? "container--with-sidebar" : ""; ?>
+    <div class="container <?= $classname ?>">
         <header class="main-header">
             <a href="/">
                 <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
             <div class="main-header__side">
-                <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
+                <?php if(isset($_SESSION['user_id'])):?>
+                    <a class="main-header__side-item button button--plus open-modal" href="add.php">Добавить задачу</a>
 
-                <div class="main-header__side-item user-menu">
-                    <div class="user-menu__data">
-                        <p><?=$user?></p>
+                  <div class="main-header__side-item user-menu">
+                      <div class="user-menu__data">
+                          <p><?=$user?></p>
 
-                        <a href="#">Выйти</a>
+                          <a href="#">Выйти</a>
+                        </div>
                     </div>
-                </div>
+                    <?php else:?>
+                        <a class="main-header__side-item button button--transparent" href="auth.php">Войти</a>
+                <?php endif;?>
             </div>
         </header>
         <?=$page_content?>

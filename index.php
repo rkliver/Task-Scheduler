@@ -4,7 +4,14 @@ require_once ('init.php');
 require_once ('functions.php');
 
 /* текущий пользователь: */
-$user = 'Keks';
+if (isset($_SESSION['user_id'])) {
+    $user_id = $_SESSION['user_id'];
+    $sql= "SELECT login FROM users WHERE id = ".'"'.$user_id.'"';
+    $res = mysqli_query($con, $sql);
+    $user_log = mysqli_fetch_assoc($res);
+    $user_name = $user_log['login'];
+    $user = $user_name;
+
 
 $show_complete_tasks = filter_input(INPUT_GET, 'show_completed', FILTER_SANITIZE_NUMBER_INT);
 
@@ -136,4 +143,5 @@ $layout = include_template('layout.php', [
 ]);
 
 print($layout);
+}
 ?>
