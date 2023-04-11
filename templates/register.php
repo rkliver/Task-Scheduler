@@ -38,7 +38,7 @@
               <label class="form__label" for="email">E-mail <sup>*</sup></label>
               <?php $classname = isset($errors['email']) ? "form__input--error" : ""; ?>
               <input class="form__input <?= $classname ?>" type="text" name="email" id="email" value="<?= getPostVal('email'); ?>" placeholder="Введите e-mail">
-              <?php if (isset($errors['email']) && $errors['email'] = 'E-mail введён некорректно'): ?>
+              <?php if (isset($errors['email']) && $errors['email'] == 'E-mail введён некорректно'): ?>
               <p class="form__message">E-mail введён некорректно</p>
               <?php endif; ?>
             </div>

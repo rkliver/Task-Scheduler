@@ -17,9 +17,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     /*Валидируем поле 'email'*/
     if ($new_user['email'] == ''){
         $errors['email'] = 'Введите e-mail';
-    }
-    else if (filter_var($new_user['email'], FILTER_VALIDATE_EMAIL) == false) {
+    }else if (filter_var($new_user['email'], FILTER_VALIDATE_EMAIL) == false) {
         $errors['email'] = 'E-mail введён некорректно';
+    }
+    else if (email_exists($new_user['email'])) {
+        $errors['email'] = 'E-mail принадлежит другому пользователю';
     }
     /*Валидируем поле 'password'*/
     if ($password == '') {

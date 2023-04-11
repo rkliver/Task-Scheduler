@@ -6,7 +6,7 @@
                     <ul class="main-navigation__list">
                         <?php foreach ($projects as $project): ?>
                             <li class="main-navigation__list-item<?php if (isset($_GET['project_id']) && $_GET['project_id'] === $project['id']) echo('--active')?>">
-                                <a class="main-navigation__list-item-link" href="http://task-scheduler/?project_id=<?=$project['id']?>"><?= $project['title']?></a>
+                                <a class="main-navigation__list-item-link" href="?project_id=<?=$project['id']?>"><?= $project['title']?></a>
                                 <span class="main-navigation__list-item-count"><?= task_counter($tasks, $project['title'])?></span>
                             </li>
                         <?php endforeach; ?>
@@ -14,24 +14,27 @@
                 </nav>
 
                 <a class="button button--transparent button--plus content__side-button"
-                   href="pages/form-project.html" target="project_add">Добавить проект</a>
+                   href="add-project.php" target="project_add">Добавить проект</a>
             </section>
 
             <main class="content__main">
                 <h2 class="content__main-heading">Список задач</h2>
 
-                <form class="search-form" action="index.php" method="post" autocomplete="off">
-                    <input class="search-form__input" type="text" name="" value="" placeholder="Поиск по задачам">
+                <form class="search-form" action="index.php" method="get" autocomplete="off">
+                    <input class="search-form__input" type="text" name="task_search" placeholder="Поиск по задачам" 
+                    <?php if (isset($_GET['task_search'])):?>
+                    value="<?php print($_GET['task_search']); ?>">
+                    <?php endif;?>
 
-                    <input class="search-form__submit" type="submit" name="" value="Искать">
+                    <input class="search-form__submit" type="submit" name="">
                 </form>
 
                 <div class="tasks-controls">
                     <nav class="tasks-switch">
-                        <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-                        <a href="/" class="tasks-switch__item">Повестка дня</a>
-                        <a href="/" class="tasks-switch__item">Завтра</a>
-                        <a href="/" class="tasks-switch__item">Просроченные</a>
+                        <a href="/?sort=all" class="tasks-switch__item <?php if (!isset($_GET['sort']) || $_GET['sort'] == 'all'):?>tasks-switch__item--active<?php endif;?>">Все задачи</a>
+                        <a href="/?sort=today" class="tasks-switch__item <?php if (isset($_GET['sort']) && $_GET['sort'] == 'today'):?>tasks-switch__item--active<?php endif;?>">Повестка дня</a>
+                        <a href="/?sort=tomorrow" class="tasks-switch__item <?php if (isset($_GET['sort']) && $_GET['sort'] == 'tomorrow'):?>tasks-switch__item--active<?php endif;?>">Завтра</a>
+                        <a href="/?sort=past" class="tasks-switch__item <?php if (isset($_GET['sort']) && $_GET['sort'] == 'past'):?>tasks-switch__item--active<?php endif;?>">Просроченные</a>
                     </nav>
 
                     <label class="checkbox">
@@ -40,6 +43,7 @@
                     </label>
                 </div>
                 <table class="tasks">
+                    <p><?=$task_search_null?></p>
                     <?php foreach ($tasks as $task): 
                         $time_to_task = strtotime($task['date']) -  time();
                         $hours_left = floor($time_to_task / 3600);
