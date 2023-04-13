@@ -117,27 +117,10 @@ ORDER BY date";
             if ($result) {
                 $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
                 if (count($tasks) == 0) {
-                    $error = 'Задач не найдено';
-                    $page_content = include_template('error.php', ['error' => $error]);
+                    header('location: /add.php');
+                    exit;
                 }
 
-            } else {
-                $error = mysqli_error($con);
-                $page_content = include_template('error.php', ['error' => $error]);
-            }
-        }
-    }
-
-    if (isset($_GET['project_id'])) {
-        $project_id = filter_input(INPUT_GET, 'project_id', FILTER_SANITIZE_NUMBER_INT);
-        if (!$con) {
-            $error = mysqli_connect_error();
-            $page_content = include_template('error.php', ['error' => $error]);
-        } else {
-            $sql = $sort_tasks_by_project;
-            $result = mysqli_query($con, $sql);
-            if ($result) {
-                $tasks = mysqli_fetch_all($result, MYSQLI_ASSOC);
             } else {
                 $error = mysqli_error($con);
                 $page_content = include_template('error.php', ['error' => $error]);
@@ -183,5 +166,4 @@ ORDER BY date";
         'user' => $user
     ]);
 }
-
 print($layout);

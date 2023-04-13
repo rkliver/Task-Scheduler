@@ -17,16 +17,6 @@
       </section>
 
       <main class="content__main">
-      <?php if (isset($errors)): ?>
-        <div class="form__errors">
-           <p>Пожалуйста, исправьте следующие ошибки:</p>
-           <ul>
-             <?php foreach ($errors as $val): ?>
-                <li><strong><?= $val; ?>:</strong></li>
-             <?php endforeach; ?>
-           </ul>
-        </div>
-     <?php endif; ?>
         <h2 class="content__main-heading">Добавление задачи</h2>
 
         <form class="form"  action="" method="post" enctype="multipart/form-data" autocomplete="off">
@@ -65,6 +55,16 @@
           </div>
 
           <div class="form__row form__row--controls">
+          <?php if (isset($errors)): ?>
+        <div class="form__errors">
+           <p class="error-message">Пожалуйста, исправьте следующие ошибки:</p>
+           <ul>
+             <?php foreach ($errors as $val): ?>
+                <li><strong><?= $val; ?>:</strong></li>
+             <?php endforeach; ?>
+           </ul>
+        </div>
+     <?php endif; ?>
             <input class="button" type="submit" name="" value="Добавить">
           </div>
         </form>
