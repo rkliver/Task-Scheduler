@@ -1,7 +1,8 @@
 <?php
+
 require_once('init.php');
-require_once ('helpers.php');
-require_once ('functions.php');
+require_once('helpers.php');
+require_once('functions.php');
 
 $layout = include_template('register.php', ['title' => 'Регистрация']);
 
@@ -15,12 +16,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $errors =[];
 
     /*Валидируем поле 'email'*/
-    if ($new_user['email'] == ''){
+    if ($new_user['email'] == '') {
         $errors['email'] = 'Введите e-mail';
-    }else if (filter_var($new_user['email'], FILTER_VALIDATE_EMAIL) == false) {
+    } elseif (filter_var($new_user['email'], FILTER_VALIDATE_EMAIL) == false) {
         $errors['email'] = 'E-mail введён некорректно';
-    }
-    else if (email_exists($new_user['email'])) {
+    } elseif (email_exists($new_user['email'])) {
         $errors['email'] = 'E-mail принадлежит другому пользователю';
     }
     /*Валидируем поле 'password'*/
@@ -32,22 +32,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     /*Валидируем поле 'login'*/
     if ($new_user['login'] == '') {
         $errors['name'] = 'Введите имя';
-    } else if (iconv_strlen($new_user['login']) > 32) {
+    } elseif (iconv_strlen($new_user['login']) > 32) {
         $errors['name'] = 'Длинна поля превышает максимально допустимую (32 символа)';
     }
     $errors = array_filter($errors);
 
     if (count($errors)) {
         $layout = include_template('register.php', ['errors' => $errors, 'title' => 'Регистрация']);
-    }else{
+    } else {
         $sql = "INSERT INTO users (login, email, password, registration_date) VALUES (?, ?, ?, NOW())";
-    
+
         $stmt = db_get_prepare_stmt($con, $sql, $new_user);
         $res = mysqli_stmt_execute($stmt);
 
         if ($res) {
             header("Location: index.php");
-        }else {
+        } else {
             $page_content = include_template('error.php', ['error' => mysqli_error($con)]);
             $layout = include_template('layout.php', [
                 'page_content' => $page_content,
@@ -58,4 +58,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 }
 print($layout);
-?>
